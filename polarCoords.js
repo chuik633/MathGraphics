@@ -1,0 +1,2 @@
+let pane;
+const params = {};

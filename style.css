@@ -1,0 +1,109 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.project-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+.project-container img {
+  max-width: 200px;
+}
+.project-container img:hover {
+  border: 1px solid black;
+}
+.project {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+canvas {
+  display: block;
+}
+:root {
+  /* base */
+  --tp-base-background-color: hsla(0, 0%, 98%, 1);
+  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.1);
+  --in-bg: rgb(225, 225, 225);
+
+  /* buttons */
+  --tp-button-background-color: hsla(0, 0%, 95%, 1);
+  --tp-button-background-color-hover: hsla(0, 0%, 90%, 1);
+  --tp-button-background-color-active: hsla(0, 0%, 88%, 1);
+  --tp-button-background-color-focus: hsla(0, 0%, 92%, 1);
+  --tp-button-foreground-color: hsla(0, 0%, 10%, 0.9);
+
+  /* containers (folders, inputs, root panel) */
+  --tp-container-background-color: hsla(0, 0%, 100%, 1);
+  --tp-container-background-color-hover: hsla(0, 0%, 97%, 1);
+  --tp-container-background-color-active: hsla(0, 0%, 94%, 1);
+  --tp-container-background-color-focus: hsla(0, 0%, 96%, 1);
+  --tp-container-foreground-color: hsla(0, 0%, 0%, 0.7);
+
+  /* grooves (sliders etc.) */
+  --tp-groove-foreground-color: hsl(0, 0%, 0%);
+
+  /* inputs */
+  --tp-input-background-color: hsla(0, 0%, 100%, 1);
+  --tp-input-background-color-hover: hsla(0, 0%, 96%, 1);
+  --tp-input-background-color-active: hsla(0, 0%, 93%, 1);
+  --tp-input-background-color-focus: hsla(0, 0%, 95%, 1);
+  --tp-input-foreground-color: hsla(0, 0%, 10%, 0.85);
+
+  /* labels */
+  --tp-label-foreground-color: hsla(0, 0%, 15%, 1);
+
+  /* monitors (graphs / number previews) */
+  --tp-monitor-background-color: hsla(0, 0%, 96%, 1);
+  --tp-monitor-foreground-color: hsla(0, 0%, 10%, 0.5);
+}
+
+.tp-rotv {
+  background-color: inherit !important;
+  border-radius: 2 !important;
+  border: 0.5px solid black !important;
+  box-shadow: none;
+  font-family: "Courier New" !important;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+}
+.tp-sldv_k::after {
+  background-color: rgb(255, 255, 255) !important;
+  border: 0.1px solid black !important;
+}
+.tp-sldv_k:hover::after {
+  background-color: black !important;
+}
+.tp-sldv_t::before {
+  border: 0.1px solid black !important;
+}
+
+.tp-ckbv_w {
+  border: 0.1px solid black !important;
+}
+
+.tp-fldv_b,
+.tp-rotv_b {
+  background-color: black !important;
+  color: white !important;
+}
+
+.tp-fldv_b,
+.tp-rotv_b:hover {
+  background-color: rgb(52, 52, 52) !important;
+  color: white !important;
+}
