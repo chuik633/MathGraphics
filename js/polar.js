@@ -4,6 +4,7 @@ const params = {
   smoothness: 500,
   revolutions: 1,
   speed: 0.01,
+  radius: 50,
   terms: [],
   dots: false,
 };
@@ -25,25 +26,32 @@ function setup() {
   pane.element.style.left = "10px";
 
   termsFolder = pane.addFolder({ title: "Terms" });
-  pane.addButton({ title: "Add term" }).on("click", () => {
+  let addBtn = pane.addButton({ title: "Add term" }).on("click", () => {
     addTerm();
+    handleLatexChange();
   });
 
   pane.addInput(params, "smoothness", { min: 100, max: 500, step: 1 });
   pane.addInput(params, "revolutions", { min: 1, max: 5, step: 1 });
+  pane.addInput(params, "radius", {
+    min: 1,
+    max: (window.innerWidth - sideSpace) / 2,
+  });
   pane.addInput(params, "speed", { min: 0, max: 0.1 });
   pane.addInput(params, "dots", { min: 0.001, max: 0.01 });
 
-  addTerm({ radius: 80, amplitude: 10, freq: 1, fn: "sine" });
+  addTerm({ amplitude: 10, freq: 2, fn: "sine" });
+
+  addLatexPreview(10, height - 50, termsFolder);
+  handleLatexChange();
+
   angleMode(RADIANS);
 }
 
 function addTerm(vals) {
-  const index = params.terms.length;
-  let maxR = map(index, 1, 10, 200, 10);
+  let index = params.terms.length;
   let maxAmp = map(index, 1, 10, 80, 1);
   if (index >= 1) {
-    maxR = params.terms[index - 1].radius;
     maxAmp = params.terms[index - 1].amplitude;
   }
 
@@ -52,7 +60,6 @@ function addTerm(vals) {
     term = vals;
   } else {
     term = {
-      radius: Math.random() * maxR,
       amplitude: Math.random() * maxAmp,
       freq: 1,
       fn: "sine",
@@ -62,7 +69,7 @@ function addTerm(vals) {
   params.terms.push(term);
 
   const folder = termsFolder.addFolder({ title: `Term ${index}` });
-  folder.addInput(term, "radius", { min: 0, max: maxR });
+
   folder.addInput(term, "amplitude", {
     min: 0,
     max: maxAmp,
@@ -100,7 +107,7 @@ function drawTerms(x, y) {
     noStroke();
   }
   for (let theta = 0; theta < t; theta += stepSize) {
-    let r = 0;
+    let r = params.radius;
 
     for (let i = 0; i < params.terms.length; i++) {
       r += computeTerm(i, theta);
@@ -124,7 +131,59 @@ function computeTerm(termIndex, theta) {
   }
   let term = params.terms[termIndex];
 
-  let r = term.radius + term.fn((theta / term.freq) * t) * term.amplitude;
+  let r = term.fn((theta / term.freq) * t) * term.amplitude;
 
   return r;
+}
+
+function getTermsString() {
+  let equation = `r = `;
+  let i = 0;
+  for (const term of params.terms) {
+    i++;
+
+    if (i <= params.terms.length && i > 1) {
+      equation += "+";
+    }
+    let amp = Math.floor(term.amplitude);
+
+    let freq = Math.floor(term.freq);
+
+    if (term.fn == sin) {
+      if (term.freq != 1) {
+        equation += String.raw` ${amp}\sin\left(\frac{\theta}{ ${freq} }\, t\right) `;
+      } else {
+        equation += String.raw` ${amp}\sin\left(\theta\, t\right) `;
+      }
+    } else {
+      if (term.freq != 1) {
+        equation += String.raw` ${amp}\cos\left(\frac{\theta}{ ${freq}}\, t\right) `;
+      } else {
+        equation += String.raw` ${amp}\cos\left(\theta\, t\right) `;
+      }
+    }
+  }
+  return equation;
+}
+function addLatexPreview(x, y, termsFolder) {
+  latexPreview = document.createElement("div");
+  latexPreview.style.position = "fixed";
+  latexPreview.style.top = `${y}px`;
+  latexPreview.style.left = `${x}px`;
+
+  //get the latex text:
+
+  termsFolder.on("change", (event) => {
+    handleLatexChange();
+  });
+
+  document.body.append(latexPreview);
+}
+
+function handleLatexChange() {
+  latexPreview.innerHTML = `\\(${getTermsString()}\\)`;
+  if (window.MathJax) {
+    MathJax.typesetPromise([latexPreview]);
+  }
+  let error = document.querySelector("[data-mjx-error]");
 }
