@@ -119,11 +119,11 @@ canvas {
   border: 0.1px solid black !important;
 }
 .tp-btnv_t {
-  background: rgb(218, 106, 66) !important;
+  background: #ff3701 !important;
   color: white;
 }
 .tp-btnv_t:hover {
-  background: rgb(225, 68, 29) !important;
+  background: #fa5325 !important;
   color: white;
 }
 .tp-fldv_b,

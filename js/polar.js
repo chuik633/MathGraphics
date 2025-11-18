@@ -1,12 +1,13 @@
 // Creates a shape out of functions
 let pane;
 const params = {
-  smoothness: 500,
+  smoothness: 200,
   revolutions: 1,
   speed: 0.01,
   radius: 50,
   terms: [],
-  dots: false,
+  dots: true,
+  showAnnotations: false,
 };
 let termsFolder;
 const sideSpace = 280;
@@ -25,6 +26,8 @@ function setup() {
   pane.element.style.top = `${10}px`;
   pane.element.style.left = "10px";
 
+  pane.element.style.transform = "scale(0.8)";
+
   termsFolder = pane.addFolder({ title: "Terms" });
   let addBtn = pane.addButton({ title: "Add term" }).on("click", () => {
     addTerm();
@@ -38,9 +41,10 @@ function setup() {
     max: (window.innerWidth - sideSpace) / 2,
   });
   pane.addInput(params, "speed", { min: 0, max: 0.1 });
-  pane.addInput(params, "dots", { min: 0.001, max: 0.01 });
+  pane.addInput(params, "dots");
+  pane.addInput(params, "showAnnotations");
 
-  addTerm({ amplitude: 10, freq: 2, fn: "sine" });
+  addTerm({ amplitude: 10, freq: 2, fn: "sin" });
 
   addLatexPreview(10, height - 50, termsFolder);
   handleLatexChange();
@@ -62,7 +66,7 @@ function addTerm(vals) {
     term = {
       amplitude: Math.random() * maxAmp,
       freq: 1,
-      fn: "sine",
+      fn: ["sin", "cos"][Math.round(Math.random())],
     };
   }
 
@@ -75,7 +79,7 @@ function addTerm(vals) {
     max: maxAmp,
   });
   folder.addInput(term, "freq", { min: 1, max: 20 });
-  folder.addInput(term, "fn", { options: { sine: sin, cosine: cos } });
+  folder.addInput(term, "fn", { options: { sin: "sin", cos: "cos" } });
 }
 
 function draw() {
@@ -97,7 +101,10 @@ function drawTerms(x, y) {
   translate(x, y);
 
   let stepSize = (2 * PI) / params.smoothness;
-
+  if (params.showAnnotations) {
+    fill("black");
+    ellipse(0, 0, 2, 2);
+  }
   if (!params.dots) {
     noFill();
     stroke("black");
@@ -106,9 +113,10 @@ function drawTerms(x, y) {
     fill("black");
     noStroke();
   }
-  for (let theta = 0; theta < t; theta += stepSize) {
-    let r = params.radius;
+  let theta;
 
+  for (theta = 0; theta < t; theta += stepSize) {
+    let r = params.radius;
     for (let i = 0; i < params.terms.length; i++) {
       r += computeTerm(i, theta);
     }
@@ -117,7 +125,29 @@ function drawTerms(x, y) {
     } else {
       vertex(r * cos(theta), r * sin(theta));
     }
+    if (params.showAnnotations) {
+      push();
+      if (theta + stepSize >= t) {
+        strokeWeight(1);
+        stroke("#FF3701");
+        push();
+        translate((r / 2) * cos(theta), (r / 2) * sin(theta));
+        rotate(theta + PI);
+        noStroke();
+        fill("#FF3701");
+        text("r", 0, 0);
+
+        pop();
+      } else {
+        strokeWeight(0.5);
+        stroke("black");
+      }
+
+      line(0, 0, r * cos(theta), r * sin(theta));
+      pop();
+    }
   }
+
   if (!params.dots) {
     endShape();
   }
@@ -131,9 +161,11 @@ function computeTerm(termIndex, theta) {
   }
   let term = params.terms[termIndex];
 
-  let r = term.fn((theta / term.freq) * t) * term.amplitude;
-
-  return r;
+  if (term.fn == "sin") {
+    return Math.sin((theta / term.freq) * t) * term.amplitude;
+  } else {
+    return Math.cos((theta / term.freq) * t) * term.amplitude;
+  }
 }
 
 function getTermsString() {
@@ -149,7 +181,7 @@ function getTermsString() {
 
     let freq = Math.floor(term.freq);
 
-    if (term.fn == sin) {
+    if (term.fn == "sin") {
       if (term.freq != 1) {
         equation += String.raw` ${amp}\sin\left(\frac{\theta}{ ${freq} }\, t\right) `;
       } else {
