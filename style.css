@@ -5,7 +5,7 @@ body {
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 .main-container {
   padding: 50px;
@@ -39,6 +39,7 @@ p {
 }
 .project-container img {
   max-width: 200px;
+  border: 0.5px solid black;
 }
 .project-container img:hover {
   border: 1px solid black;
@@ -117,7 +118,14 @@ canvas {
 .tp-ckbv_w {
   border: 0.1px solid black !important;
 }
-
+.tp-btnv_t {
+  background: rgb(218, 106, 66) !important;
+  color: white;
+}
+.tp-btnv_t:hover {
+  background: rgb(225, 68, 29) !important;
+  color: white;
+}
 .tp-fldv_b,
 .tp-rotv_b {
   background-color: black !important;
