@@ -236,7 +236,7 @@ class Graph {
 
     let endNode = walk.length;
     if (params.animate) {
-      endNode = (params.speed * frameCount) % walk.length;
+      endNode = Math.ceil(sin(params.speed * frameCount) * walk.length);
     }
 
     for (let i = 0; i < endNode - 1; i++) {
@@ -250,6 +250,7 @@ class Graph {
       noStroke();
       fill(...color);
       ellipse(node.x, node.y, 5);
+      ellipse(nextNode.x, nextNode.y, 5);
     }
   }
 }
