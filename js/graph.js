@@ -6,7 +6,7 @@ const params = {
   diagonals: true,
   hideGraph: false,
   color: { r: 228, g: 183, b: 66 },
-  thickness: 2,
+  thickness: 1,
   animate: true,
   speed: 0.08,
 };
@@ -30,7 +30,7 @@ function setup() {
   pane.element.style.transformOrigin = "top left";
   pane.element.style.top = `${10}px`;
   pane.element.style.left = "10px";
-  pane.element.style.transform = "scale(85%)";
+  pane.element.style.transform = "scale(90%)";
   pane.addInput(params, "animate");
   pane.addInput(params, "speed", { min: 0.001, max: 3 });
   pane.addInput(params, "hideGraph");
@@ -48,20 +48,21 @@ function setup() {
   const pathFolder = pane.addFolder({ title: "path settings" });
   pathFolder.addInput(params, "color");
   pathFolder.addInput(params, "thickness", { min: 0.1, max: 4 });
-  pathFolder.addButton({ title: "walk the graph!" }).on("click", () => {
-    allWalks.push({
-      walk: graph.randomWalk(),
-      color: Object.values(params.color),
-    });
-  });
+
   buildGridGraph();
   textFont("Courier New");
 }
 
 function draw() {
   background("white");
+  noStroke();
+  fill("black");
+  textAlign(CENTER);
+  text("click a node to create a walk", sideSpace / 2, 300);
+  text("SPACEBAR - clears screen", sideSpace / 2, 350);
   stroke("black");
   strokeWeight(1);
+
   line(sideSpace, 0, sideSpace, height);
   if (!params.hideGraph) {
     graph.drawGraph();
@@ -130,15 +131,16 @@ class Node {
     //node
     fill("black");
     if (this == graph.startNode) {
-      fill("red");
+      ellipse(this.x, this.y, 8, 8);
     }
+    let r = Math.max(cellSize / 8, 0.1);
     if (dist(mouseX, mouseY, this.x, this.y) < cellSize / 2) {
       ellipse(this.x, this.y, 8, 8);
       nearestNode = this;
       fill("black");
-      text("set start", this.x - 20, this.y - 10);
+      text("set start", this.x - 10, this.y - 10);
     } else {
-      ellipse(this.x, this.y, 4, 4);
+      ellipse(this.x, this.y, r, r);
     }
   }
 }
