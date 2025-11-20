@@ -119,11 +119,13 @@ canvas {
   border: 0.1px solid black !important;
 }
 .tp-btnv_t {
-  background: #ff3701 !important;
+  background: #cf520d !important;
+  font-weight: normal !important;
   color: white;
 }
 .tp-btnv_t:hover {
-  background: #fa5325 !important;
+  background: #b94507 !important;
+  font-weight: bold !important;
   color: white;
 }
 .tp-fldv_b,
