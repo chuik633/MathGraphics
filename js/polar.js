@@ -2,12 +2,14 @@
 let pane;
 const params = {
   smoothness: 200,
-  revolutions: 1,
+  revolutions: 4,
   speed: 0.01,
-  radius: 50,
+  radius: 80,
   terms: [],
-  dots: true,
-  showAnnotations: false,
+  dots: false,
+  showAnnotations: true,
+  showFill: false,
+  color: { r: 142, g: 204, b: 138 },
 };
 let termsFolder;
 const sideSpace = 280;
@@ -41,13 +43,16 @@ function setup() {
     max: (window.innerWidth - sideSpace) / 2,
   });
   pane.addInput(params, "speed", { min: 0, max: 0.1 });
-  pane.addInput(params, "dots");
+  // pane.addInput(params, "dots");
   pane.addInput(params, "showAnnotations");
+  pane.addInput(params, "showFill");
+  pane.addInput(params, "color");
 
   addTerm({ amplitude: 10, freq: 2, fn: "sin" });
 
   addLatexPreview(10, height - 50, termsFolder);
   handleLatexChange();
+  textFont("Courier New");
 
   angleMode(RADIANS);
 }
@@ -107,10 +112,10 @@ function drawTerms(x, y) {
   }
   if (!params.dots) {
     noFill();
-    stroke("black");
+    stroke(...Object.values(params.color));
     beginShape();
   } else {
-    fill("black");
+    fill(...Object.values(params.color));
     noStroke();
   }
   let theta;
@@ -129,18 +134,18 @@ function drawTerms(x, y) {
       push();
       if (theta + stepSize >= t) {
         strokeWeight(1);
-        stroke("#FF3701");
+        stroke("black");
         push();
         translate((r / 2) * cos(theta), (r / 2) * sin(theta));
         rotate(theta + PI);
         noStroke();
-        fill("#FF3701");
+        fill("black");
         text("r", 0, 0);
 
         pop();
       } else {
         strokeWeight(0.5);
-        stroke("black");
+        stroke(...Object.values(params.color));
       }
 
       line(0, 0, r * cos(theta), r * sin(theta));
@@ -149,7 +154,12 @@ function drawTerms(x, y) {
   }
 
   if (!params.dots) {
-    endShape();
+    if (params.showFill) {
+      fill(...Object.values(params.color));
+      endShape(CLOSE);
+    } else {
+      endShape();
+    }
   }
 
   pop();
