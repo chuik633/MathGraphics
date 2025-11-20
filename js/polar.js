@@ -59,7 +59,7 @@ function setup() {
 
 function addTerm(vals) {
   let index = params.terms.length;
-  let maxAmp = map(index, 1, 10, 80, 1);
+  let maxAmp = 20;
   if (index >= 1) {
     maxAmp = params.terms[index - 1].amplitude;
   }
@@ -134,13 +134,13 @@ function drawTerms(x, y) {
       push();
       if (theta + stepSize >= t) {
         strokeWeight(1);
-        stroke("black");
+        stroke(...Object.values(params.color));
         push();
         translate((r / 2) * cos(theta), (r / 2) * sin(theta));
         rotate(theta + PI);
         noStroke();
-        fill("black");
-        text("r", 0, 0);
+        // fill("black");
+        // text("r", 0, 0);
 
         pop();
       } else {
