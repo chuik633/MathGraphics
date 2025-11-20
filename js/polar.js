@@ -3,7 +3,7 @@ let pane;
 const params = {
   smoothness: 200,
   revolutions: 4,
-  speed: 0.01,
+  speed: 0.02,
   radius: 80,
   terms: [],
   dots: false,
@@ -156,6 +156,7 @@ function drawTerms(x, y) {
   if (!params.dots) {
     if (params.showFill) {
       fill(...Object.values(params.color));
+      vertex(0, 0);
       endShape(CLOSE);
     } else {
       endShape();
