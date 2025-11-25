@@ -42,7 +42,7 @@ function setup() {
 
   angleMode(RADIANS);
   document.getElementById("generateBtn").addEventListener("click", () => {
-    randomizeSettings((window.innerWidth - sideSpace) / 2);
+    randomizeSettings((window.innerWidth - sideSpace) / 4);
     randomizeTerms();
     shapes = [];
     let count = Math.floor(Math.random() * 5) + 1;
@@ -147,7 +147,7 @@ function makeRandomParams(maxRadius) {
     smoothness: Math.floor(Math.random() * 300) + 150,
     revolutions: Math.floor(Math.random() * 4) + 1,
     speed: Math.random() * 0.05,
-    radius: Math.floor(Math.random() * maxRadius) + 20,
+    radius: Math.floor((Math.random() * maxRadius) / 2) + maxRadius / 2,
     color: randomColor(),
     bgColor: params.bgColor,
     annotationColor: randomColor(),

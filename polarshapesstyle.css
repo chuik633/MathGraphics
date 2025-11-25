@@ -1,0 +1,78 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #1c1c1d;
+}
+#generateBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 20px;
+  background-color: white;
+}
+button {
+  border: none;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  color: black;
+}
+button:hover,
+button:active {
+  border: none;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  color: white;
+  background-color: black !important;
+}
+* {
+  box-sizing: border-box !important;
+}
+.main-container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  height: 100vh;
+}
+h1 {
+  font-family: Futura;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin: 0px;
+  padding: 0px;
+}
+p {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+}
+.project-container {
+  padding: 10px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+.project-container img {
+  max-width: 200px;
+  border: 0.5px solid black;
+}
+.project-container img:hover {
+  border: 1px solid black;
+}
+.project {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+canvas {
+  display: block;
+}
