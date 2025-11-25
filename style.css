@@ -34,6 +34,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 50px;
 }
@@ -52,8 +53,29 @@ p {
   align-items: center;
   gap: 10px;
 }
+#generateBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 20px;
+  background-color: white;
+}
 canvas {
   display: block;
+}
+button {
+  border: none;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  color: black;
+}
+button:hover,
+button:active {
+  border: none;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  color: white;
+  background-color: black !important;
 }
 :root {
   /* base */

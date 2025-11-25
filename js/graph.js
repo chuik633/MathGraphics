@@ -8,7 +8,7 @@ const params = {
   color: { r: 228, g: 183, b: 66 },
   thickness: 1,
   animate: true,
-  speed: 0.08,
+  speed: 0.01,
 };
 
 const sideSpace = 250;
@@ -32,7 +32,7 @@ function setup() {
   pane.element.style.left = "10px";
   pane.element.style.transform = "scale(90%)";
   pane.addInput(params, "animate");
-  pane.addInput(params, "speed", { min: 0.001, max: 3 });
+  pane.addInput(params, "speed", { min: 0.0001, max: 0.1 });
   pane.addInput(params, "hideGraph");
   const graphFolder = pane.addFolder({ title: "grid settings" });
   graphFolder.addInput(params, "rows", { min: 3, max: 50, step: 1 });

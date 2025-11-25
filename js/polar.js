@@ -56,6 +56,7 @@ function setup() {
 
   angleMode(RADIANS);
 }
+function showPane() {}
 
 function addTerm(vals) {
   let index = params.terms.length;
@@ -206,6 +207,7 @@ function getTermsString() {
       }
     }
   }
+
   return equation;
 }
 function addLatexPreview(x, y, termsFolder) {

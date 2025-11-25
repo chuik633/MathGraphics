@@ -2,8 +2,8 @@
 let pane;
 const params = {
   // function: "quadratic",
-  function: "x^2",
-  count: 3,
+  function: "|x|",
+  count: 6,
   offset: 0,
   animateRotation: 0.005,
   animateScale: 0,
@@ -11,7 +11,7 @@ const params = {
 
   up: true,
   smoothness: 200,
-  scale: 1,
+  scale: 1.5,
   yMax: 100,
   yMin: -100,
   xScale: 1,
