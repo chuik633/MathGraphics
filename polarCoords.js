@@ -1,2 +1,0 @@
-let pane;
-const params = {};
