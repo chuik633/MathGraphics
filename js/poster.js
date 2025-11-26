@@ -148,7 +148,7 @@ function grid() {
 function reimannSumType(text, x, y) {
   const xShift = (text.length * params.fontSize) / 2;
   const points = currFont.textToPoints(text, x - xShift, y, params.fontSize, {
-    sampleFactor: 0.8,
+    sampleFactor: 0.5,
     simplifyThreshold: 0,
   });
 
@@ -167,7 +167,7 @@ function reimannSumType(text, x, y) {
 }
 function reimannSum(points) {
   let n = 3;
-  const maxN = 80;
+  const maxN = params.fontSize * 0.7;
   const minX = min(points.map((p) => p.x));
   const maxX = max(points.map((p) => p.x));
   const minY = min(points.map((p) => p.y));
@@ -184,12 +184,12 @@ function reimannSum(points) {
 
   let dx = params.fontSize / n;
   //   push();
-
-  const slices = getVerticalExtents(points, minX, maxX, dx, 3);
+  noFill();
+  const slices = getSegments(points, minX, maxX, dx, 3);
   for (const slice of slices) {
-    // line(slice.x, slice.minY, slice.x, slice.maxY);
-    noFill();
-    rect(slice.x, slice.minY, dx, Math.abs(slice.maxY - slice.minY));
+    for (const [minY, maxY] of slice.segments) {
+      rect(slice.x, minY, dx, Math.abs(maxY - minY));
+    }
   }
   //   fill("red");
   //   circle(centerX, centerY, 10);
@@ -223,6 +223,45 @@ function getVerticalExtents(points, minX, maxX, dx, threshold) {
       minY,
       maxY,
     });
+  }
+
+  return results;
+}
+
+function getSegments(points, minX, maxX, dx, threshold) {
+  const results = [];
+  const n = Math.ceil((maxX - minX) / dx);
+
+  for (let i = 0; i < n; i++) {
+    const sliceX = minX + i * dx;
+
+    const slicePoints = points
+      .filter((p) => Math.abs(p.x - sliceX) <= threshold)
+      .sort((a, b) => a.y - b.y);
+
+    if (slicePoints.length === 0) {
+      results.push({ x: sliceX, segments: [] });
+      continue;
+    }
+
+    const segments = [];
+    let currentSeg = [slicePoints[0].y];
+
+    for (let j = 1; j < slicePoints.length; j++) {
+      const prev = slicePoints[j - 1].y;
+      const curr = slicePoints[j].y;
+
+      if (curr - prev > params.fontSize / 10) {
+        currentSeg.push(prev);
+        segments.push(currentSeg);
+        currentSeg = [curr];
+      }
+    }
+
+    currentSeg.push(slicePoints[slicePoints.length - 1].y);
+    segments.push(currentSeg);
+
+    results.push({ x: sliceX, segments });
   }
 
   return results;
