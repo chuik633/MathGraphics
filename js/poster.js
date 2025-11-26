@@ -32,6 +32,7 @@ let params = {
   currFont: "",
   text: "Art of Problem Solving",
   fontSize: 100,
+  gapDetection: 20,
   animate: false,
 };
 let currFont;
@@ -56,7 +57,7 @@ function setup() {
 
   pane.addInput(params, "text");
   pane.addInput(params, "fontSize", { min: 50, max: 200 });
-
+  pane.addInput(params, "gapDetection", { min: 5, max: params.fontSize });
   pane.addInput(params, "currFont", {
     options: {
       Black: "Bk",
@@ -250,8 +251,8 @@ function getSegments(points, minX, maxX, dx, threshold) {
     for (let j = 1; j < slicePoints.length; j++) {
       const prev = slicePoints[j - 1].y;
       const curr = slicePoints[j].y;
-
-      if (curr - prev > params.fontSize / 10) {
+      //gap
+      if (curr - prev > params.gapDetection) {
         currentSeg.push(prev);
         segments.push(currentSeg);
         currentSeg = [curr];
