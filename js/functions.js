@@ -39,8 +39,8 @@ function setup() {
   pane = new Tweakpane.Pane({ title: "Parameters", style: { theme: "light" } });
 
   pane.element.style.position = "fixed";
-  pane.element.style.transformOrigin = "top left";
-  pane.element.style.top = `${10}px`;
+  pane.element.style.transformOrigin = "bottom left";
+  pane.element.style.bottom = `${10}px`;
   pane.element.style.left = "10px";
 
   const tab = pane.addTab({

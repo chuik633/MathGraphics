@@ -54,16 +54,16 @@ function draw() {
     params.fontSize,
     "outside"
   );
-  drawPathSpokesRotated(
-    letterPaths["P"],
-    centerX + params.fontSize * 2,
-    centerY,
-    map(params.divisions, 8, 10, 20, 50),
-    params.weight * 2,
-    params.fontSize * 0.25,
-    params.fontSize,
-    "middle"
-  );
+  // drawPathSpokesRotated(
+  //   letterPaths["P"],
+  //   centerX + params.fontSize * 2,
+  //   centerY,
+  //   map(params.divisions, 8, 10, 20, 50),
+  //   params.weight * 2,
+  //   params.fontSize * 0.25,
+  //   params.fontSize,
+  //   "middle"
+  // );
   drawPathSpokesRotated(
     letterPaths["S"],
     centerX + params.fontSize * 3,

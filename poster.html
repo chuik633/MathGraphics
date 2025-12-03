@@ -6,16 +6,138 @@
 
     <title>Sketch</title>
 
-    <link rel="stylesheet" type="text/css" href="polarshapesstyle.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="polarshapesstyle.css" /> -->
 
     <script src="libraries/p5.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script src="https://unpkg.com/delaunator@5.0.0/delaunator.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.7/dist/tweakpane.min.js"></script>
+    <style>
+      * {
+        overflow: hidden;
+      }
+      body {
+        background-color: black;
+      }
+      @font-face {
+        font-family: ESKlarheitKurrent;
+        src: url("./assets/fonts/ESKlarheitKurrent/ESKlarheitKurrent-Bd-TRIAL.ttf");
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: ESKlarheitKurrent;
+        src: url("./assets/fonts/ESKlarheitKurrent/ESKlarheitKurrent-Bk-TRIAL.ttf");
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: ESKlarheitKurrent;
+        src: url("./assets/fonts/ESKlarheitKurrent/ESKlarheitKurrent-Rg-TRIAL.ttf");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: ESKlarheitKurrent;
+        src: url("./assets/fonts/ESKlarheitKurrent/ESKlarheitKurrent-Lt-TRIAL.ttf");
+        font-weight: 300;
+      }
+      * {
+        font-family: ESKlarheitKurrent;
+      }
+      #poster,
+      #mouseEffects {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: fit-content;
+        height: fit-content;
+      }
+      #mouseEffects {
+        pointer-events: none;
+        z-index: 10;
+      }
+      #sketch1,
+      #sketch2,
+      #sketch3 {
+        position: absolute;
+        /* border: 1px solid white; */
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        z-index: 1;
+        width: fit-content;
+        height: fit-content;
+        pointer-events: none;
+      }
+      .text {
+        width: fit-content;
+        height: fit-content;
+        overflow: visible !important;
+        position: absolute;
+        top: calc(100vw / 30 - 12px);
+        left: calc(100vw / 30 - 10px);
+        /* border: 1px solid white; */
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 0px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        z-index: 2;
+      }
+      .text :nth-child(2) {
+        left: 50%;
+      }
+      h1 {
+        position: relative;
+        padding: 0px;
+        margin: 0px;
+        font-size: 50px;
+        font-size: 100px;
+
+        font-weight: 300;
+        line-height: 98%;
+        /* border: 1px solid red; */
+
+        z-index: 2;
+        text-align: center;
+      }
+      .colorDiv {
+        background: #eeffc0;
+      }
+      .greyDiv {
+        background: #d9d9d9;
+      }
+      /* .halfScreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50vw;
+        height: 100vh;
+      } */
+    </style>
+    <script src="./js/poster/posterd3.js"></script>
   </head>
 
   <body>
-    <script src="./js/poster.js"></script>
+    <div class="text">
+      <h1>Enticingly</h1>
+      <h1>Enigmatic</h1>
+    </div>
+    <div class="colorDiv halfScreen"></div>
+    <div id="poster"></div>
+    <div id="sketch1"></div>
+    <div id="sketch2"></div>
+    <div id="sketch3"></div>
+    <div id="mouseEffects"></div>
+
+    <script src="./js/poster/sketch1.js"></script>
+    <script src="./js/poster/sketch2.js"></script>
+    <!-- <script src="./js/poster/poster.js"></script> -->
+    <!-- <script src="./js/poster/sketch3.js"></script> -->
   </body>
 </html>
