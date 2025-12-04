@@ -52,10 +52,11 @@ function makeGrid() {
   const gridContentsData = [
     {
       id: 0,
-      r1: Math.floor(numRows / 2),
+      r1: Math.ceil(numRows / 2) + 1,
       c1: -1,
       r2: numRows + 2,
-      c2: 8,
+      c2: 6,
+      innerW: 4,
       color: colors.yellow,
       textAlign: "top right",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum lorem ipsum.gna aliqua.",
@@ -63,7 +64,8 @@ function makeGrid() {
     {
       id: 1,
       r1: -1,
-      c1: numCols - 5,
+      c1: numCols - 3,
+      innerW: 4,
       r2: Math.floor(numRows / 2),
       c2: numCols + 2,
       color: colors.grey,
@@ -150,7 +152,7 @@ function makeGrid() {
       .html(content.text)
       .style("margin", "0")
       .style("max-width", `${6 * gridSize}px`)
-      .style("width", `${x2 - x1 - gridSize * 2.5}px`);
+      .style("width", `${content.innerW * gridSize}px`);
   });
 
   function revealContent(contentId) {
@@ -333,9 +335,12 @@ function makeGrid() {
 
   const borderSvg = d3
     .select("#poster")
+    .style("overflow", "visible !important")
     .append("svg")
+    .attr("class", "border-svg")
     .attr("width", width)
     .attr("height", height)
+    .style("overflow", "visible !important")
     .style("position", "absolute")
     .style("top", "0")
     .style("left", "0")
