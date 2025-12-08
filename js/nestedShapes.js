@@ -64,8 +64,8 @@ let w = window.innerWidth / 5;
 window.addEventListener("DOMContentLoaded", (event) => {
   const HEX_W = w;
   const HEX_H = (w * Math.sqrt(3)) / 2;
-  const X_SPACING = HEX_W * 0.73;
-  const Y_SPACING = HEX_H * 0.5;
+  const X_SPACING = HEX_W * 0.7333;
+  const Y_SPACING = HEX_H * 0.49;
   function drawShape(r, c) {
     const shape = loadShape("assets/nestedshapes.json");
 
